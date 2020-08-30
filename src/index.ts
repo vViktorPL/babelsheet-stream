@@ -144,7 +144,10 @@ export const writeJSONFile = (filePath: string) =>
     );
 
 
-const mergePaths = (previousPath: unknown[], path: unknown[]) =>
-  previousPath.map(
-    (pathPart, index) => (path[index] !== null && path[index] !== undefined && String(path[index]).trim().length > 0) ? path[index] : pathPart
+const mergePaths = (previousPath: unknown[], path: unknown[]) => {
+  const firstNodeIndex = path.findIndex(node => node !== null);
+
+  return path.map(
+    (pathPart, index) => pathPart === null && index <= firstNodeIndex ? previousPath[index] : pathPart
   );
+}
