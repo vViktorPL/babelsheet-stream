@@ -103,14 +103,14 @@ export function fromBabelsheet({
           language,
           path: path.filter(value => value !== null),
           tag: row[0],
-          value: row[pathMaxLength + 1 + languageIndex],
+          value: nullToEmptyString(row[pathMaxLength + 1 + languageIndex]),
         } as TranslationEntry)
       ))
     )),
   );
 }
 
-
+const nullToEmptyString = <T>(value: T) => value === null ? "" : value as Exclude<T, null>;
 
 export const writeJSONFile = (filePath: string) =>
   (entries$: Observable<TranslationJsonEntry>): Observable<JSONFileSummary> =>
@@ -146,6 +146,9 @@ export const writeJSONFile = (filePath: string) =>
 
 const mergePaths = (previousPath: unknown[], path: unknown[]) => {
   const firstNodeIndex = path.findIndex(node => node !== null);
+  if (firstNodeIndex === -1) {
+    return previousPath;
+  }
 
   return [...previousPath.slice(0, firstNodeIndex), ...path.slice(firstNodeIndex)];
 }
