@@ -95,7 +95,7 @@ export function fromBabelsheet({
   ).pipe(
     mergeMap(({ rows, pathMaxLength, languages }) => fromArray(rows).pipe(
       scan(({ path }, row) => ({
-        row, path: mergePaths(path, row.slice(1, pathMaxLength)),
+        row, path: mergePaths(path, row.slice(1, pathMaxLength + 1)),
       }), { row: [] as (string|null|number|boolean)[], path: Array(pathMaxLength + 1).fill(null) }),
       filter(({ row }) => !row.slice(pathMaxLength + 1).every(value => value === null)),
       mergeMap(({ row, path }) => languages.map(
