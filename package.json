@@ -1,6 +1,6 @@
 {
   "name": "babelsheet-stream",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Rx.js observable that parses google spreadsheets that have Babelsheet compliant structure",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
