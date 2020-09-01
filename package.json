@@ -35,6 +35,6 @@
   "dependencies": {
     "google-spreadsheet": "^3.0.13",
     "lodash.set": "^4.3.2",
-    "rxjs": "^6.6.2"
+    "rxjs": "6.5.2"
   }
 }
