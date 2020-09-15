@@ -27,14 +27,14 @@
   "homepage": "https://github.com/vViktorPL/babelsheet-stream#readme",
   "devDependencies": {
     "@types/google-spreadsheet": "^3.0.1",
-    "@types/lodash.set": "^4.3.6",
+    "@types/lodash.setwith": "^4.3.6",
     "@types/node": "^14.6.2",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.2"
   },
   "dependencies": {
     "google-spreadsheet": "^3.0.13",
-    "lodash.set": "^4.3.2",
+    "lodash.setwith": "^4.3.2",
     "rxjs": "6.5.2"
   }
 }

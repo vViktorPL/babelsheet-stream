@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs'
 import { mergeMap, reduce } from 'rxjs/operators'
-import set from 'lodash.set'
+import setWith from 'lodash.setwith'
 import { promises as fs } from "fs"
 import * as fsPath from "path"
 
@@ -20,7 +20,7 @@ export const writeJSONFile = (filePath: string) =>
     entries$.pipe(
       reduce((accumulator, entry) => {
         if (Array.isArray(entry.path)) {
-          set(accumulator.data, entry.path, entry.value);
+          setWith(accumulator.data, entry.path, entry.value, Object);
         } else {
           accumulator.data[entry.path] = entry.value;
         }
