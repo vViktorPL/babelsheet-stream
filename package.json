@@ -9,6 +9,7 @@
     "build": "tsc",
     "demo-flat": "ts-node examples/flat-languages.ts",
     "demo-nested": "ts-node examples/language-section-path-value.ts",
+    "demo-csv": "ts-node examples/csv-per-language.ts",
     "prepublish": "npm run build"
   },
   "repository": {
