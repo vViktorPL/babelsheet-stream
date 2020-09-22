@@ -1,10 +1,10 @@
 # babelsheet-stream
 
-Rx.js observable that parses google spreadsheets that have Babelsheet compliant structure
+Rx.js observable that parses google spreadsheets that have Babelsheet-compliant structure
 
 ## Purpose
 
-There is cool Babelsheet project which enables straightforward way for syncing 
+There is cool [Babelsheet project](https://github.com/TheSoftwareHouse/babelsheet-js) which enables straightforward way for syncing 
 the translation files in your project by fetching them from specifically structured
 Google Spreadsheet file. The problem with Babelsheet however is that although it provides
 a nice features, it might be the case that you have a specific structure of translations that
@@ -50,7 +50,7 @@ The above script will group the language translations by language and write JSON
 As you can see beside reading and parsing the spreadsheets, babelsheet-stream also provides some
 helper for writing the JSON files.
 
-## Example: nested structure
+## Example: nested JSON structure
 
 Suppose you want to group translations per language, but you also want to split the translations
 by the root section of the translation key path. For instance if you have translation keys like this:
@@ -93,3 +93,35 @@ fromBabelsheet({
   }
 );
 ```
+
+## Example: CSV
+
+```typescript
+import { fromBabelsheet, writeCSVFile } from 'babelsheet-stream';
+import { mergeMap, groupBy } from 'rxjs/operators'
+
+// Import your credentials.json file that you can generate in Google API console 
+// panel when creating Service Account.
+import credentials from './.credentials.json';
+
+fromBabelsheet({
+  spreadsheetId: "10LiCKh8KRmFUQUHqMgcx70THb1xprYp5HdyQR_6zcBY",
+  credentials,
+}).pipe(
+  groupBy(
+    ({ language }) => language,
+    ({ path, value }) => ({ translationKey: path.join('.'), value })
+  ),
+  mergeMap(languageEntries$ => languageEntries$.pipe(
+    writeCSVFile({
+      filePath: `${__dirname}/i18n/csv/${languageEntries$.key}.csv`,
+      columnsOrder: ["translationKey", "value"],
+    })
+  )),
+).subscribe(
+  ({ filePath, entryCount }) => {
+    console.log(`Wrote file: "${filePath}" with ${entryCount} entries`);
+  }
+);
+```
+
